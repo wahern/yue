@@ -111,5 +111,8 @@ TEST_F(RefMethodTest, Set) {
 
   lua::SetTop(state_, 0);
   lua::CollectGarbage(state_);
+  // On lua5.1 it takes a few cycles to collect the refs table.
+  lua::CollectGarbage(state_);
+  lua::CollectGarbage(state_);
   ASSERT_EQ(new_result, 88);
 }

@@ -2,23 +2,33 @@
 # Use of this source code is governed by the license that can be found in the
 # LICENSE file.
 
-config("lua_config") {
-  include_dirs = [ "." ]
-}
-
-executable("luac") {
-  sources = [ "src/luac.c" ]
-  deps = [ ":lua" ]
-}
-
-executable("lua53") {
+executable("lua54") {
   sources = [ "src/lua.c" ]
-  deps = [ ":lua" ]
+  deps = [ ":lua_shared" ]
+}
+
+if (is_win) {
+  executable("wlua54") {
+    sources = [ "src/lua.c" ]
+    deps = [
+      ":lua_shared",
+      "//build/win:default_exe_manifest",
+    ]
+    configs -= [ "//build/config/win:lean_and_mean" ]
+  }
 }
 
 shared_library("lua_shared") {
-  output_name = "lua53"
+  output_name = "lua54"
+  output_prefix_override = true  # do not add "lib" prefix
   deps = [ ":lua" ]
+
+  if (is_mac && !is_component_build) {
+    ldflags = [
+      "-install_name",
+      "@executable_path/$output_name.dylib",
+    ]
+  }
 }
 
 source_set("lua") {
@@ -28,7 +38,6 @@ source_set("lua") {
     "src/lauxlib.c",
     "src/lauxlib.h",
     "src/lbaselib.c",
-    "src/lbitlib.c",
     "src/lcode.c",
     "src/lcode.h",
     "src/lcorolib.c",
@@ -46,6 +55,7 @@ source_set("lua") {
     "src/lgc.h",
     "src/linit.c",
     "src/liolib.c",
+    "src/ljumptab.h",
     "src/llex.c",
     "src/llex.h",
     "src/llimits.h",
@@ -57,6 +67,7 @@ source_set("lua") {
     "src/lobject.h",
     "src/lopcodes.c",
     "src/lopcodes.h",
+    "src/lopnames.h",
     "src/loslib.c",
     "src/lparser.c",
     "src/lparser.h",
@@ -72,6 +83,7 @@ source_set("lua") {
     "src/ltm.c",
     "src/ltm.h",
     "src/lua.h",
+    "src/lua.hpp",
     "src/luaconf.h",
     "src/lualib.h",
     "src/lundump.c",
@@ -100,6 +112,4 @@ source_set("lua") {
   if (is_clang) {
     cflags_c = [ "-Wno-string-plus-int" ]
   }
-
-  public_configs = [ ":lua_config" ]
 }
