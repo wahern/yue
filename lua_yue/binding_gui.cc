@@ -1857,6 +1857,36 @@ struct Type<nu::Button::Type> {
     } else if (type == "disclosure") {
       *out = nu::Button::Type::Disclosure;
       return true;
+    } else if (type == "momentary-light") {
+      *out = nu::Button::Type::MomentaryLight;
+      return true;
+    } else if (type == "push-on-push-off") {
+      *out = nu::Button::Type::PushOnPushOff;
+      return true;
+    } else if (type == "toggle") {
+      *out = nu::Button::Type::Toggle;
+      return true;
+    } else if (type == "switch") {
+      *out = nu::Button::Type::Switch;
+      return true;
+    } else if (type == "radio") {
+      *out = nu::Button::Type::Radio;
+      return true;
+    } else if (type == "momentary-change") {
+      *out = nu::Button::Type::MomentaryChange;
+      return true;
+    } else if (type == "on-off") {
+      *out = nu::Button::Type::OnOff;
+      return true;
+    } else if (type == "momentary-push-in") {
+      *out = nu::Button::Type::MomentaryPushIn;
+      return true;
+    } else if (type == "accelerator") {
+      *out = nu::Button::Type::Accelerator;
+      return true;
+    } else if (type == "multi-level-accelerator") {
+      *out = nu::Button::Type::MultiLevelAccelerator;
+      return true;
 #endif
     } else {
       return false;
@@ -1936,6 +1966,7 @@ struct Type<nu::Button> {
            "gettitle", &nu::Button::GetTitle,
 #if defined(OS_MAC)
            "setbuttonstyle", &nu::Button::SetButtonStyle,
+           "setbuttontype", &nu::Button::SetButtonType,
            "sethasborder", &nu::Button::SetHasBorder,
            "hasborder", &nu::Button::HasBorder,
 #endif

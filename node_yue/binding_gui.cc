@@ -2166,6 +2166,7 @@ struct Type<nu::Button> {
         "getTitle", &nu::Button::GetTitle,
 #if defined(OS_MAC)
         "setButtonStyle", &nu::Button::SetButtonStyle,
+        "setButtonType", &nu::Button::SetButtonType,
         "setHasBorder", &nu::Button::SetHasBorder,
         "hasBorder", &nu::Button::HasBorder,
 #endif

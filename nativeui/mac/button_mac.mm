@@ -154,6 +154,12 @@ void Button::SetButtonStyle(Style style) {
   UpdateDefaultStyle();
 }
 
+void Button::SetButtonType(unsigned long type) {
+  auto* button = static_cast<NSButton*>(GetNative());
+  [button setButtonType:static_cast<NSButtonType>(type)];
+  UpdateDefaultStyle();
+}
+
 void Button::SetHasBorder(bool yes) {
   static_cast<NSButton*>(GetNative()).bordered = yes;
   UpdateDefaultStyle();

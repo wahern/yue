@@ -16,11 +16,27 @@ class Image;
 class NATIVEUI_EXPORT Button : public View {
  public:
   enum class Type {
+#if defined(OS_MAC)
+    // Following values should match NSButtonType.
+    MomentaryLight = 0,
+    PushOnPushOff,
+    Toggle,
+    Switch,
+    Radio,
+    MomentaryChange,
+    OnOff,
+    MomentaryPushIn,
+    Accelerator, // API_AVAILABLE(macos(10.10.3)) = 8,
+    MultiLevelAccelerator, // API_AVAILABLE(macos(10.10.3)) = 9,
+
+    // Portable API types (may be treated specially by constructor).
+    Normal = MomentaryPushIn,
+    Checkbox = Switch,
+    Disclosure = OnOff,
+#else
     Normal,
     Checkbox,
     Radio,
-#if defined(OS_MAC)
-    Disclosure,
 #endif
   };
   explicit Button(const std::string& title, Type type = Type::Normal);
@@ -56,6 +72,7 @@ class NATIVEUI_EXPORT Button : public View {
     Inline,
   };
   void SetButtonStyle(Style style);
+  void SetButtonType(Type type);
 
   void SetHasBorder(bool yes);
   bool HasBorder() const;
